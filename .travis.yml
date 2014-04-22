@@ -11,7 +11,7 @@ before_script:
   - composer self-update
   - composer install --prefer-source -n
   - wget https://commondatastorage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.3.zip -O /tmp/google_appengine.zip
-  - unzip /tmp/google_appengine.zip -d /tmp -q
+  - unzip -q /tmp/google_appengine.zip -d /tmp
   - /tmp/google_appengine/dev_appserver.py --php_executable_path=`which php5-cgi` --port=9999 . &
 
 script:
