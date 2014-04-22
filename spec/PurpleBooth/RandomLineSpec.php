@@ -32,11 +32,11 @@ class RandomLineSpec extends ObjectBehavior
 
     public function getMatchers()
     {
-        return [
+        return array(
             'haveOneOfTheValues' => function ($subject, $value) {
                 return in_array($subject, $value);
             },
-        ];
+        );
     }
 
 }
