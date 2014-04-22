@@ -1,0 +1,12 @@
+body {
+    background-color: black;
+    color: white;
+    font-size: 300px;
+    text-align: center;
+    padding-top: 40px;
+    font-family: "ssp", Helvetica, Arial, sans-serif;
+}
+
+body.phrases {
+    font-size: 200px;
+}

@@ -1,0 +1,141 @@
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-black-webfont.eot');
+    src: url('../fonts/ssp-black-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-black-webfont.woff') format('woff'),
+         url('../fonts/ssp-black-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-black-webfont.svg#sspblack') format('svg');
+    font-weight: 900;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-blackit-webfont.eot');
+    src: url('../fonts/ssp-blackit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-blackit-webfont.woff') format('woff'),
+         url('../fonts/ssp-blackit-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-blackit-webfont.svg#sspblack_italic') format('svg');
+    font-weight: 900;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-bold-webfont.eot');
+    src: url('../fonts/ssp-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-bold-webfont.woff') format('woff'),
+         url('../fonts/ssp-bold-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-bold-webfont.svg#sspbold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-boldit-webfont.eot');
+    src: url('../fonts/ssp-boldit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-boldit-webfont.woff') format('woff'),
+         url('../fonts/ssp-boldit-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-boldit-webfont.svg#sspbold_italic') format('svg');
+    font-weight: 700;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-extralight-webfont.eot');
+    src: url('../fonts/ssp-extralight-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-extralight-webfont.woff') format('woff'),
+         url('../fonts/ssp-extralight-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-extralight-webfont.svg#sspextralight') format('svg');
+    font-weight: 100;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-extralightit-webfont.eot');
+    src: url('../fonts/ssp-extralightit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-extralightit-webfont.woff') format('woff'),
+         url('../fonts/ssp-extralightit-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-extralightit-webfont.svg#sspXLtIt') format('svg');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-it-webfont.eot');
+    src: url('../fonts/ssp-it-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-it-webfont.woff') format('woff'),
+         url('../fonts/ssp-it-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-it-webfont.svg#sspitalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+
+}
+
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-light-webfont.eot');
+    src: url('../fonts/ssp-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-light-webfont.woff') format('woff'),
+         url('../fonts/ssp-light-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-light-webfont.svg#ssplight') format('svg');
+    font-weight: 200;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-lightit-webfont.eot');
+    src: url('../fonts/ssp-lightit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-lightit-webfont.woff') format('woff'),
+         url('../fonts/ssp-lightit-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-lightit-webfont.svg#ssplight_italic') format('svg');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-regular-webfont.eot');
+    src: url('../fonts/ssp-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-regular-webfont.woff') format('woff'),
+         url('../fonts/ssp-regular-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-regular-webfont.svg#sspregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-semibold-webfont.eot');
+    src: url('../fonts/ssp-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-semibold-webfont.woff') format('woff'),
+         url('../fonts/ssp-semibold-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-semibold-webfont.svg#sspsemibold') format('svg');
+    font-weight: 500;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ssp';
+    src: url('../fonts/ssp-semiboldit-webfont.eot');
+    src: url('../fonts/ssp-semiboldit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ssp-semiboldit-webfont.woff') format('woff'),
+         url('../fonts/ssp-semiboldit-webfont.ttf') format('truetype'),
+         url('../fonts/ssp-semiboldit-webfont.svg#sspSBdIt') format('svg');
+    font-weight: 500;
+    font-style: italic;
+
+}
