@@ -21,7 +21,7 @@ $app->get('/', function () use ($app) {
 $app->get('/words', function () use ($app, $wordsPath) {
     $randomLine = new RandomLine($wordsPath);
     $type = "words";
-    $interval = 4000;
+    $interval = 3500;
 
     ob_start();
     require __DIR__ . "/../views/random.phtml";
@@ -34,7 +34,7 @@ $app->get('/words', function () use ($app, $wordsPath) {
 $app->get('/phrases', function () use ($app, $phrasesPath) {
     $randomLine = new RandomLine($phrasesPath);
     $type = "phrases";
-    $interval = 8000;
+    $interval = 7000;
 
     ob_start();
     require __DIR__ . "/../views/random.phtml";
