@@ -14,5 +14,9 @@ handlers:
 - url: /fonts
   static_dir: public/fonts
 
+- url: /favicon\.ico
+  static_files: public/favicon.ico
+  upload: public/favicon.ico
+
 - url: /.*
   script: public/web.php
