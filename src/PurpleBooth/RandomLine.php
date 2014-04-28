@@ -3,12 +3,18 @@
 namespace PurpleBooth;
 
 /**
- * Class RandomLine
+ * Pick a random line from a file
+ *
  * @package PurpleBooth
  */
 class RandomLine
 {
 
+    /**
+     * Path to data file
+     *
+     * @var string
+     */
     private $path;
 
     /**

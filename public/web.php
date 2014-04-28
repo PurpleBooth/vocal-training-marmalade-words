@@ -1,13 +1,29 @@
 <?php
 
-use PurpleBooth\RandomLine;
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$app = new Silex\Application();
-$phrasesPath = __DIR__ . "/../data/phrases";
-$wordsPath = __DIR__ . "/../data/words";
+use PurpleBooth\PageSettings;
+use PurpleBooth\RandomLine;
+use Symfony\Component\Debug\ErrorHandler;
 
+/*
+ * Settings
+ */
+require __DIR__ . "/../config/pages.php";
+
+/*
+ * Turn on exception based errors
+ */
+ErrorHandler::register();
+
+/*
+ * Init app
+ */
+$app = new Silex\Application();
+
+/*
+ * Index
+ */
 $app->get('/', function () use ($app) {
 
     ob_start();
@@ -18,30 +34,25 @@ $app->get('/', function () use ($app) {
     return $output;
 });
 
-$app->get('/words', function () use ($app, $wordsPath) {
-    $randomLine = new RandomLine($wordsPath);
-    $type = "words";
-    $interval = 3500;
+foreach($page as $route => $rawConfig) {
+    $app->get($route, function () use ($app, $rawConfig) {
+        $randomLine = new RandomLine($rawConfig['data-path']);
+        $config = new PageSettings();
+        $config->setType($rawConfig['type']);
+        $config->setInterval($rawConfig['interval']);
 
-    ob_start();
-    require __DIR__ . "/../views/random.phtml";
+        if(isset($rawConfig['reminder'])) {
+            $config->setReminder($rawConfig['reminder']);
+        }
 
-    $output = ob_get_contents();
-    ob_end_clean();
-    return $output;
-});
 
-$app->get('/phrases', function () use ($app, $phrasesPath) {
-    $randomLine = new RandomLine($phrasesPath);
-    $type = "phrases";
-    $interval = 7000;
+        ob_start();
+        require __DIR__ . "/../views/random.phtml";
 
-    ob_start();
-    require __DIR__ . "/../views/random.phtml";
-
-    $output = ob_get_contents();
-    ob_end_clean();
-    return $output;
-});
+        $output = ob_get_contents();
+        ob_end_clean();
+        return $output;
+    });
+}
 
 $app->run(); 

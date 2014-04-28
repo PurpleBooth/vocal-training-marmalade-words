@@ -12,7 +12,9 @@
     <link type="text/css" rel="stylesheet" href="css/fonts.css">
     <link type="text/css" rel="stylesheet" href="css/main.css">
 </head>
-<body class="<?php echo htmlspecialchars($type) ?>" data-interval="<?php echo htmlspecialchars($interval) ?>">
-<?php echo htmlspecialchars(strtoupper($randomLine->getRandomLine())); ?>
+<body class="<?php echo $app->escape($config->getType()) ?>"
+      data-interval="<?php echo $app->escape($config->getInterval()) ?>"
+      data-reminder="<?php echo $app->escape($config->getReminder()) ?>">
+<?php echo $app->escape(strtoupper($randomLine->getRandomLine())); ?>
 </body>
 </html>
