@@ -5,6 +5,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use PurpleBooth\PageSettings;
 use PurpleBooth\RandomLine;
 use Symfony\Component\Debug\ErrorHandler;
+use Symfony\Component\Debug\ExceptionHandler;
 
 /*
  * Settings
@@ -15,6 +16,7 @@ require __DIR__ . "/../config/pages.php";
  * Turn on exception based errors
  */
 ErrorHandler::register();
+ExceptionHandler::register();
 
 /*
  * Init app
