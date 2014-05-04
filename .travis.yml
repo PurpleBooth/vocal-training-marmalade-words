@@ -5,6 +5,7 @@ php:
 
 before_script:
   - php-cgi -v
+  - /home/travis/.phpenv/shims/php-cgi -v
   - composer self-update
   - composer install --prefer-source -n
   - wget https://commondatastorage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.3.zip -O /tmp/google_appengine.zip
