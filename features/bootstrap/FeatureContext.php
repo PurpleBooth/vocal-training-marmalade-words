@@ -8,8 +8,7 @@ use Behat\MinkExtension\Context\MinkContext;
 //
 // Require 3rd-party libraries here:
 //
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
+require_once __DIR__ . "/../../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php";
 //
 
 /**
@@ -51,6 +50,14 @@ class FeatureContext extends MinkContext
     }
 
     /**
+     * @Given /^the following words? exist:$/
+     */
+    public function theFollowingWordsExist(TableNode $table)
+    {
+        $this->theFollowingDataExists($table, __DIR__ . "/../../data/words");
+    }
+
+    /**
      * @AfterScenario
      */
     public function restoreOriginalPhrases(ScenarioEvent $event)
@@ -73,6 +80,22 @@ class FeatureContext extends MinkContext
     }
 
     /**
+     * @When /^view the phrases api$/
+     */
+    public function viewThePhrasesApi()
+    {
+        $this->visit("/phrases.json");
+    }
+
+    /**
+     * @When /^view the word page$/
+     */
+    public function viewTheWordPage()
+    {
+        $this->visit("/words");
+    }
+
+    /**
      * @Then /^I should see "([^"]*)" or "([^"]*)"$/
      */
     public function iShouldSeeOr($text1, $text2)
@@ -89,19 +112,14 @@ class FeatureContext extends MinkContext
     }
 
     /**
-     * @When /^view the word page$/
+     * @Then /^the response should be valid json$/
      */
-    public function viewTheWordPage()
+    public function assertResponseJson()
     {
-        $this->visit("/words");
-    }
+        $body = $this->getSession()->getPage()->getHtml();
 
-    /**
-     * @Given /^the following words? exist:$/
-     */
-    public function theFollowingWordsExist(TableNode $table)
-    {
-        $this->theFollowingDataExists($table, __DIR__ . "/../../data/words");
-    }
+        json_decode($body);
 
+        assertEquals(JSON_ERROR_NONE, json_last_error());
+    }
 }
