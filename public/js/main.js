@@ -43,6 +43,13 @@
         var changeInterval;
 
         /**
+         * Words currently loaded from API. When .length == 0 more will be requested
+         *
+         * @type {Array}
+         */
+        var loadedWords = [];
+
+        /**
          * Bind the change event
          * Read the reminder & interval settings
          */
@@ -61,25 +68,36 @@
         };
 
         /**
-         * Request a new word, and display it
+         * Request a new word, from API or cache, and display it
          */
         self.changeText = function () {
-            $.get(window.location.href, {}, function (data, textStatus, jqXHR) {
-                if(!reminder == 0) {
-                    reminderCount++;
-                }
+            if (loadedWords.length == 0) {
+                $.get(window.location.href + ".json", {}, function (data, textStatus, jqXHR) {
+                    loadedWords = data;
+                    self.displayNewWord(loadedWords.pop());
+                });
+            }
+            else {
+                self.displayNewWord(loadedWords.pop());
+            }
+        };
 
-                var $body = $(data);
-                var text = $body.get(14).nodeValue;
+        /**
+         * Display a word on the page
+         *
+         * @param {string} word
+         */
+        self.displayNewWord = function (word) {
+            if (!reminder == 0) {
+                reminderCount++;
+            }
 
-                if(!reminder == 0 && reminderCount == reminder) {
-                    text += reminderSymbol;
-                    reminderCount = 0;
-                }
+            if (!reminder == 0 && reminderCount == reminder) {
+                word += reminderSymbol;
+                reminderCount = 0;
+            }
 
-                $('body').text(text);
-            });
-
+            $('body').text(word.toUpperCase());
         };
 
         return self;

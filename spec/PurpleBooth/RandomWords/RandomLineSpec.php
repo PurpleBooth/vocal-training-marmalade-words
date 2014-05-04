@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\PurpleBooth;
+namespace spec\PurpleBooth\RandomWords;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -22,7 +22,7 @@ class RandomLineSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('PurpleBooth\RandomLine');
+        $this->shouldHaveType('PurpleBooth\RandomWords\RandomLine');
     }
 
     function it_is_able_to_grab_a_random_line()
@@ -30,7 +30,7 @@ class RandomLineSpec extends ObjectBehavior
         $this->getRandomLine()->shouldHaveOneOfTheValues(array("moon", "match", "march", "monday"));
     }
 
-    public function getMatchers()
+    function getMatchers()
     {
         return array(
             'haveOneOfTheValues' => function ($subject, $value) {
@@ -38,5 +38,4 @@ class RandomLineSpec extends ObjectBehavior
             },
         );
     }
-
 }

@@ -8,8 +8,7 @@ use Behat\MinkExtension\Context\MinkContext;
 //
 // Require 3rd-party libraries here:
 //
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
+require_once __DIR__ . "/../../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php";
 //
 
 /**
@@ -36,18 +35,12 @@ class FeatureContext extends MinkContext
         $this->theFollowingDataExists($table, __DIR__ . "/../../data/phrases");
     }
 
-    private function theFollowingDataExists(TableNode $table, $path)
+    /**
+     * @Given /^the following words? exist:$/
+     */
+    public function theFollowingWordsExist(TableNode $table)
     {
-        $rows = $table->getRows();
-        $words = array_map(function ($value) {
-            return $value[0];
-        }, $rows);
-
-        array_shift($words); // Remove heading
-        $formattedWordList = implode("\n", $words);
-
-        rename($path, "$path.orig");
-        file_put_contents($path, $formattedWordList);
+        $this->theFollowingDataExists($table, __DIR__ . "/../../data/words");
     }
 
     /**
@@ -73,6 +66,30 @@ class FeatureContext extends MinkContext
     }
 
     /**
+     * @When /^view the phrases api$/
+     */
+    public function viewThePhrasesApi()
+    {
+        $this->visit("/phrases.json");
+    }
+
+    /**
+     * @When /^view the word page$/
+     */
+    public function viewTheWordPage()
+    {
+        $this->visit("/words");
+    }
+
+    /**
+     * @When /^view the words api$/
+     */
+    public function viewTheWordsApi()
+    {
+        $this->visit("/words.json");
+    }
+
+    /**
      * @Then /^I should see "([^"]*)" or "([^"]*)"$/
      */
     public function iShouldSeeOr($text1, $text2)
@@ -88,20 +105,74 @@ class FeatureContext extends MinkContext
         }
     }
 
+
     /**
-     * @When /^view the word page$/
+     * @Then /^the response should be valid json$/
      */
-    public function viewTheWordPage()
+    public function assertResponseJson()
     {
-        $this->visit("/words");
+        $this->getJsonPage();
+        assertEquals(JSON_ERROR_NONE, json_last_error());
     }
 
     /**
-     * @Given /^the following words? exist:$/
+     * @Then /^I should see (\d+) (?:phrase|word)s?$/
      */
-    public function theFollowingWordsExist(TableNode $table)
+    public function iShouldSeePhrases($phraseCount)
     {
-        $this->theFollowingDataExists($table, __DIR__ . "/../../data/words");
+        $actual = $this->getJsonPage();
+        assertCount((int)$phraseCount, $actual);
     }
+
+    /**
+     * @Then /^the same (?:phrase|word) should not be repeated twice in sequence$/
+     */
+    public function theSamePhraseShouldNotBeRepeatedTwiceInSequence()
+    {
+        $subject = $this->getJsonPage();
+
+        if (!is_array($subject)) {
+            throw new \Exception("API did not return array");
+        }
+
+        $previousWord = null;
+
+        foreach ($subject as $word) {
+            if ($previousWord == $word) {
+                throw new \Exception("API returned two consecutive words");
+            }
+
+            $previousWord = $word;
+        }
+    }
+
+    /**
+     * @param TableNode $table
+     * @param string $path
+     */
+    private function theFollowingDataExists(TableNode $table, $path)
+    {
+        $rows = $table->getRows();
+        $words = array_map(function ($value) {
+            return $value[0];
+        }, $rows);
+
+        array_shift($words); // Remove heading
+        $formattedWordList = implode("\n", $words);
+
+        rename($path, "$path.orig");
+        file_put_contents($path, $formattedWordList);
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getJsonPage()
+    {
+        $body = $this->getSession()->getPage()->getContent();
+        $actual = json_decode($body);
+        return $actual;
+    }
+
 
 }
