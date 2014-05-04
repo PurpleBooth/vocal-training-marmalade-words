@@ -10,5 +10,5 @@ Feature: Phrase API
       | Monday Morning |
     When view the phrases api
     Then the response should be valid json
-    And I should see 100 phrases
+    And I should see 175 phrases
     And the same phrase should not be repeated twice in sequence

@@ -10,5 +10,5 @@ Feature: Words API
       | Marmalade |
     When view the words api
     Then the response should be valid json
-    And I should see 100 words
+    And I should see 345 words
     And the same word should not be repeated twice in sequence
