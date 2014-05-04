@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\PurpleBooth;
+namespace spec\PurpleBooth\Settings;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,7 +9,7 @@ class PageSettingsSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('PurpleBooth\PageSettings');
+        $this->shouldHaveType('PurpleBooth\Settings\PageSettings');
     }
 
     function it_can_store_type()
@@ -33,5 +33,11 @@ class PageSettingsSpec extends ObjectBehavior
     function it_can_have_a_default_reminder_of_zero()
     {
         $this->getReminder()->shouldReturn(0);
+    }
+
+    function it_can_store_default_lines_per_api_call()
+    {
+        $this->setLinesPerApiCall(4);
+        $this->getLinesPerApiCall()->shouldReturn(4);
     }
 }

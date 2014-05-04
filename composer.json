@@ -1,7 +1,8 @@
 {
     "name": "purplebooth/vocal-training-marmalade-words",
     "require": {
-        "silex/silex": "~1.2"
+        "silex/silex": "~1.2",
+        "monolog/monolog": ">=1.0.0"
     },
     "require-dev": {
         "phpspec/phpspec": "2.0.*@dev",

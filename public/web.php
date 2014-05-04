@@ -2,10 +2,11 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use PurpleBooth\PageSettings;
-use PurpleBooth\RandomLine;
-use Symfony\Component\Debug\ErrorHandler;
-use Symfony\Component\Debug\ExceptionHandler;
+use PurpleBooth\Controllers\Index as IndexController;
+use PurpleBooth\Controllers\RandomLines as RandomLinesController;
+use PurpleBooth\RandomWords\MultipleRandomLines;
+use PurpleBooth\RandomWords\RandomLine;
+use PurpleBooth\Settings\PageSettings;
 
 /*
  * Settings
@@ -13,48 +14,55 @@ use Symfony\Component\Debug\ExceptionHandler;
 require __DIR__ . "/../config/pages.php";
 
 /*
- * Turn on exception based errors
- */
-ErrorHandler::register();
-ExceptionHandler::register();
-
-/*
  * Init app
  */
 $app = new Silex\Application();
+$app->register(new Silex\Provider\ServiceControllerServiceProvider());
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+    'monolog.handler' => new Monolog\Handler\SyslogHandler('silex')
+));
 
 /*
  * Index
  */
-$app->get('/', function () use ($app) {
-
-    ob_start();
-    require __DIR__ . "/../views/index.phtml";
-
-    $output = ob_get_contents();
-    ob_end_clean();
-    return $output;
+$app["index.controller"] = $app->share(function () use ($app) {
+    return new IndexController();
 });
+$app->get('/', "index.controller:indexAction");
 
-foreach($page as $route => $rawConfig) {
-    $app->get($route, function () use ($app, $rawConfig) {
-        $randomLine = new RandomLine($rawConfig['data-path']);
+foreach ($page as $route => $rawConfig) {
+    // Services
+    $app["random.{$rawConfig['type']}.config"] = $app->share(function () use ($rawConfig) {
         $config = new PageSettings();
         $config->setType($rawConfig['type']);
         $config->setInterval($rawConfig['interval']);
+        $config->setLinesPerApiCall($rawConfig['lines-per-api-call']);
 
-        if(isset($rawConfig['reminder'])) {
+        if (isset($rawConfig['reminder'])) {
             $config->setReminder($rawConfig['reminder']);
         }
 
-
-        ob_start();
-        require __DIR__ . "/../views/random.phtml";
-
-        $output = ob_get_contents();
-        ob_end_clean();
-        return $output;
+        return $config;
     });
+
+    $app["random.{$rawConfig['type']}.single"] = $app->share(function () use ($rawConfig) {
+        return new RandomLine($rawConfig['data-path']);
+    });
+
+    $app["random.{$rawConfig['type']}.multiple"] = $app->share(function () use ($app, $rawConfig) {
+        return new MultipleRandomLines($app["random.{$rawConfig['type']}.single"]);
+    });
+
+    $app["random.{$rawConfig['type']}.controller"] = $app->share(function () use ($app, $rawConfig) {
+        return new RandomLinesController(
+            $app,
+            $app["random.{$rawConfig['type']}.config"],
+            $app["random.{$rawConfig['type']}.multiple"]
+        );
+    });
+
+    $app->get($route, "random.{$rawConfig['type']}.controller:indexAction");
+    $app->get("$route.json", "random.{$rawConfig['type']}.controller:apiAction");
 }
 
 $app->run(); 

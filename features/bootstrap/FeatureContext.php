@@ -35,20 +35,6 @@ class FeatureContext extends MinkContext
         $this->theFollowingDataExists($table, __DIR__ . "/../../data/phrases");
     }
 
-    private function theFollowingDataExists(TableNode $table, $path)
-    {
-        $rows = $table->getRows();
-        $words = array_map(function ($value) {
-            return $value[0];
-        }, $rows);
-
-        array_shift($words); // Remove heading
-        $formattedWordList = implode("\n", $words);
-
-        rename($path, "$path.orig");
-        file_put_contents($path, $formattedWordList);
-    }
-
     /**
      * @Given /^the following words? exist:$/
      */
@@ -96,6 +82,14 @@ class FeatureContext extends MinkContext
     }
 
     /**
+     * @When /^view the words api$/
+     */
+    public function viewTheWordsApi()
+    {
+        $this->visit("/words.json");
+    }
+
+    /**
      * @Then /^I should see "([^"]*)" or "([^"]*)"$/
      */
     public function iShouldSeeOr($text1, $text2)
@@ -111,15 +105,74 @@ class FeatureContext extends MinkContext
         }
     }
 
+
     /**
      * @Then /^the response should be valid json$/
      */
     public function assertResponseJson()
     {
-        $body = $this->getSession()->getPage()->getHtml();
-
-        json_decode($body);
-
+        $this->getJsonPage();
         assertEquals(JSON_ERROR_NONE, json_last_error());
     }
+
+    /**
+     * @Then /^I should see (\d+) (?:phrase|word)s?$/
+     */
+    public function iShouldSeePhrases($phraseCount)
+    {
+        $actual = $this->getJsonPage();
+        assertCount((int)$phraseCount, $actual);
+    }
+
+    /**
+     * @Then /^the same (?:phrase|word) should not be repeated twice in sequence$/
+     */
+    public function theSamePhraseShouldNotBeRepeatedTwiceInSequence()
+    {
+        $subject = $this->getJsonPage();
+
+        if (!is_array($subject)) {
+            throw new \Exception("API did not return array");
+        }
+
+        $previousWord = null;
+
+        foreach ($subject as $word) {
+            if ($previousWord == $word) {
+                throw new \Exception("API returned two consecutive words");
+            }
+
+            $previousWord = $word;
+        }
+    }
+
+    /**
+     * @param TableNode $table
+     * @param string $path
+     */
+    private function theFollowingDataExists(TableNode $table, $path)
+    {
+        $rows = $table->getRows();
+        $words = array_map(function ($value) {
+            return $value[0];
+        }, $rows);
+
+        array_shift($words); // Remove heading
+        $formattedWordList = implode("\n", $words);
+
+        rename($path, "$path.orig");
+        file_put_contents($path, $formattedWordList);
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getJsonPage()
+    {
+        $body = $this->getSession()->getPage()->getContent();
+        $actual = json_decode($body);
+        return $actual;
+    }
+
+
 }
