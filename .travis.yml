@@ -8,7 +8,7 @@ before_script:
   - composer install --prefer-source -n
   - wget https://commondatastorage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.3.zip -O /tmp/google_appengine.zip
   - unzip -q /tmp/google_appengine.zip -d /tmp
-  - /tmp/google_appengine/dev_appserver.py --php_executable_path=`which php-cgi` --port=9999 --skip_sdk_update_check=true . &
+  - /tmp/google_appengine/dev_appserver.py --php_executable_path=`phpenv which php-cgi` --port=9999 --skip_sdk_update_check=true . &
   - sleep 10
 
 script:

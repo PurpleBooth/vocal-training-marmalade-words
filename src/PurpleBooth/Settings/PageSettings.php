@@ -1,6 +1,6 @@
 <?php
 
-namespace PurpleBooth;
+namespace PurpleBooth\Settings;
 
 /**
  * Entity class to maintain the interface with the view
@@ -23,6 +23,11 @@ class PageSettings
      * @var int
      */
     private $reminder = 0;
+
+    /**
+     * @var int
+     */
+    private $linesPerAPiCall;
 
     /**
      * Interval to wait before loading a new random word/phrase (ms)
@@ -82,5 +87,25 @@ class PageSettings
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * Lines per api call
+     *
+     * @return int
+     */
+    public function getLinesPerApiCall()
+    {
+        return $this->linesPerAPiCall;
+    }
+
+    /**
+     * Set the lines per api call
+     *
+     * @param int $lines
+     */
+    public function setLinesPerApiCall($lines)
+    {
+        $this->linesPerAPiCall = $lines;
     }
 }

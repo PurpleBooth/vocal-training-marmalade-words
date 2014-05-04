@@ -1,6 +1,6 @@
 <?php
 
-namespace PurpleBooth;
+namespace PurpleBooth\RandomWords;
 
 /**
  * Pick a random line from a file
