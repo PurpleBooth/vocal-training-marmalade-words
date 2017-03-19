@@ -26,6 +26,8 @@ class RandomLine
 
     /**
      * Get a random line from a file.
+     *
+     * @return string
      */
     public function getRandomLine()
     {

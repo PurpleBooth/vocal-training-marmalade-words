@@ -45,7 +45,7 @@ class MultipleRandomLines
      */
     public function getLines($numberOfLines)
     {
-        $lines = array();
+        $lines = [];
         $previousLine = null;
 
         foreach (range(1, $numberOfLines) as $lineNumber) {

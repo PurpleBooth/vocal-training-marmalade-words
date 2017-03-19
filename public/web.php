@@ -18,9 +18,9 @@ require __DIR__.'/../config/pages.php';
  */
 $app = new Silex\Application();
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
-$app->register(new Silex\Provider\MonologServiceProvider(), array(
+$app->register(new Silex\Provider\MonologServiceProvider(), [
     'monolog.handler' => new Monolog\Handler\SyslogHandler('silex'),
-));
+]);
 
 /*
  * Index
@@ -32,7 +32,7 @@ $app->get('/', 'index.controller:indexAction');
 
 foreach ($page as $route => $rawConfig) {
     // Services
-    $app["random.{$rawConfig['type']}.config"] = $app->share(function () use ($rawConfig) {
+    $app['random.'.$rawConfig['type'].'.config'] = $app->share(function () use ($rawConfig) {
         $config = new PageSettings();
         $config->setType($rawConfig['type']);
         $config->setInterval($rawConfig['interval']);
@@ -45,24 +45,24 @@ foreach ($page as $route => $rawConfig) {
         return $config;
     });
 
-    $app["random.{$rawConfig['type']}.single"] = $app->share(function () use ($rawConfig) {
+    $app['random.'.$rawConfig['type'].'.single'] = $app->share(function () use ($rawConfig) {
         return new RandomLine($rawConfig['data-path']);
     });
 
-    $app["random.{$rawConfig['type']}.multiple"] = $app->share(function () use ($app, $rawConfig) {
-        return new MultipleRandomLines($app["random.{$rawConfig['type']}.single"]);
+    $app['random.'.$rawConfig['type'].'.multiple'] = $app->share(function () use ($app, $rawConfig) {
+        return new MultipleRandomLines($app['random.'.$rawConfig['type'].'.single']);
     });
 
-    $app["random.{$rawConfig['type']}.controller"] = $app->share(function () use ($app, $rawConfig) {
+    $app['random.'.$rawConfig['type'].'.controller'] = $app->share(function () use ($app, $rawConfig) {
         return new RandomLinesController(
             $app,
-            $app["random.{$rawConfig['type']}.config"],
-            $app["random.{$rawConfig['type']}.multiple"]
+            $app['random.'.$rawConfig['type'].'.config'],
+            $app['random.'.$rawConfig['type'].'.multiple']
         );
     });
 
-    $app->get($route, "random.{$rawConfig['type']}.controller:indexAction");
-    $app->get("$route.json", "random.{$rawConfig['type']}.controller:apiAction");
+    $app->get($route, 'random.'.$rawConfig['type'].'.controller:indexAction');
+    $app->get($route.'.json', 'random.'.$rawConfig['type'].'.controller:apiAction');
 }
 
 $app->run();

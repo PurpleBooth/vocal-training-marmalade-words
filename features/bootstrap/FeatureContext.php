@@ -2,31 +2,19 @@
 
 use Behat\Behat\Event\ScenarioEvent;
 use Behat\Gherkin\Node\TableNode;
-use Behat\MinkExtension\Context\MinkContext;
 use Behat\Mink\Exception\ExpectationException;
+use Behat\MinkExtension\Context\MinkContext;
 
 //
 // Require 3rd-party libraries here:
 //
 require_once __DIR__.'/../../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php';
-//
 
 /**
  * Features context.
  */
 class FeatureContext extends MinkContext
 {
-    /**
-     * Initializes context.
-     * Every scenario gets it's own context object.
-     *
-     * @param array $parameters context parameters (set them up through behat.yml)
-     */
-    public function __construct(array $parameters)
-    {
-        // Initialize your context here
-    }
-
     /**
      * @Given /^the following phrases exist:$/
      */
@@ -48,11 +36,11 @@ class FeatureContext extends MinkContext
      */
     public function restoreOriginalPhrases(ScenarioEvent $event)
     {
-        $paths = array(__DIR__.'/../../data/words', __DIR__.'/../../data/phrases');
+        $paths = [__DIR__.'/../../data/words', __DIR__.'/../../data/phrases'];
         foreach ($paths as $path) {
-            if (file_exists("$path.orig") && file_exists($path)) {
+            if (file_exists($path.'.orig') && file_exists($path)) {
                 unlink($path);
-                rename("$path.orig", $path);
+                rename($path.'.orig', $path);
             }
         }
     }
@@ -91,6 +79,9 @@ class FeatureContext extends MinkContext
 
     /**
      * @Then /^I should see "([^"]*)" or "([^"]*)"$/
+     *
+     * @param mixed $text1
+     * @param mixed $text2
      */
     public function iShouldSeeOr($text1, $text2)
     {
@@ -100,7 +91,11 @@ class FeatureContext extends MinkContext
             try {
                 $this->assertPageContainsText($text2);
             } catch (ExpectationException $e) {
-                throw new ExpectationException("Could not find \"$text1\" or \"$text2\" in page", $this->getSession(), $e);
+                throw new ExpectationException(
+                    sprintf('Could not find "%s" or "%s" in page', $text1, $text2),
+                    $this->getSession(),
+                    $e
+                );
             }
         }
     }
@@ -116,6 +111,8 @@ class FeatureContext extends MinkContext
 
     /**
      * @Then /^I should see (\d+) (?:phrase|word)s?$/
+     *
+     * @param mixed $phraseCount
      */
     public function iShouldSeePhrases($phraseCount)
     {
@@ -152,14 +149,17 @@ class FeatureContext extends MinkContext
     private function theFollowingDataExists(TableNode $table, $path)
     {
         $rows = $table->getRows();
-        $words = array_map(function ($value) {
-            return $value[0];
-        }, $rows);
+        $words = array_map(
+            function ($value) {
+                return $value[0];
+            },
+            $rows
+        );
 
         array_shift($words); // Remove heading
         $formattedWordList = implode("\n", $words);
 
-        rename($path, "$path.orig");
+        rename($path, $path.'.orig');
         file_put_contents($path, $formattedWordList);
     }
 
