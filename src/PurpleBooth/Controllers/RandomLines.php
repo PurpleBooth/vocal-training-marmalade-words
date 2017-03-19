@@ -8,9 +8,7 @@ use Silex\Application as SilexApp;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * Controller that represents different types of random words slide shows
- *
- * @package PurpleBooth\Controllers
+ * Controller that represents different types of random words slide shows.
  */
 class RandomLines
 {
@@ -30,8 +28,8 @@ class RandomLines
     private $app;
 
     /**
-     * @param SilexApp $app
-     * @param PageSettings $config
+     * @param SilexApp            $app
+     * @param PageSettings        $config
      * @param MultipleRandomLines $randomLines
      */
     public function __construct(SilexApp $app, PageSettings $config, MultipleRandomLines $randomLines)
@@ -42,17 +40,18 @@ class RandomLines
     }
 
     /**
-     * Get the index
+     * Get the index.
      *
      * @return string
      */
     public function indexAction()
     {
         ob_start();
-        require __DIR__ . "/../../../views/random.phtml";
+        require __DIR__.'/../../../views/random.phtml';
 
         $output = ob_get_contents();
         ob_end_clean();
+
         return $output;
     }
 

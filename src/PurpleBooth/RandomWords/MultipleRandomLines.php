@@ -3,11 +3,9 @@
 namespace PurpleBooth\RandomWords;
 
 /**
- * Class MultipleRandomLines
+ * Class MultipleRandomLines.
  *
  * Get a defined number of random lines
- *
- * @package PurpleBooth\RandomWords
  */
 class MultipleRandomLines
 {
@@ -25,7 +23,7 @@ class MultipleRandomLines
     }
 
     /**
-     * get a single random line
+     * get a single random line.
      *
      * @return string
      */
@@ -42,6 +40,7 @@ class MultipleRandomLines
      * No two lines will be the same in sequence
      *
      * @param int $numberOfLines
+     *
      * @return array
      */
     public function getLines($numberOfLines)

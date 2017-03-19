@@ -3,22 +3,19 @@
 namespace PurpleBooth\RandomWords;
 
 /**
- * Pick a random line from a file
- *
- * @package PurpleBooth
+ * Pick a random line from a file.
  */
 class RandomLine
 {
-
     /**
-     * Path to data file
+     * Path to data file.
      *
      * @var string
      */
     private $path;
 
     /**
-     * Init class
+     * Init class.
      *
      * @param $path
      */
@@ -28,7 +25,7 @@ class RandomLine
     }
 
     /**
-     * Get a random line from a file
+     * Get a random line from a file.
      */
     public function getRandomLine()
     {

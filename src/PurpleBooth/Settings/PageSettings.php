@@ -3,9 +3,7 @@
 namespace PurpleBooth\Settings;
 
 /**
- * Entity class to maintain the interface with the view
- *
- * @package PurpleBooth
+ * Entity class to maintain the interface with the view.
  */
 class PageSettings
 {
@@ -30,7 +28,7 @@ class PageSettings
     private $linesPerAPiCall;
 
     /**
-     * Interval to wait before loading a new random word/phrase (ms)
+     * Interval to wait before loading a new random word/phrase (ms).
      *
      * @return int
      */
@@ -40,7 +38,7 @@ class PageSettings
     }
 
     /**
-     * Set the interval
+     * Set the interval.
      *
      * @param int $interval
      */
@@ -50,7 +48,7 @@ class PageSettings
     }
 
     /**
-     * When to display a reminder. 0 for don't display a reminder
+     * When to display a reminder. 0 for don't display a reminder.
      *
      * @return int
      */
@@ -60,7 +58,7 @@ class PageSettings
     }
 
     /**
-     * Set the reminder
+     * Set the reminder.
      *
      * @param int $reminder
      */
@@ -70,7 +68,7 @@ class PageSettings
     }
 
     /**
-     * Page type, phrases, or words
+     * Page type, phrases, or words.
      *
      * @return string
      */
@@ -80,7 +78,7 @@ class PageSettings
     }
 
     /**
-     * Set the page type
+     * Set the page type.
      *
      * @param string $type
      */
@@ -90,7 +88,7 @@ class PageSettings
     }
 
     /**
-     * Lines per api call
+     * Lines per api call.
      *
      * @return int
      */
@@ -100,7 +98,7 @@ class PageSettings
     }
 
     /**
-     * Set the lines per api call
+     * Set the lines per api call.
      *
      * @param int $lines
      */

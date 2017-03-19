@@ -5,4 +5,4 @@ This is a simple static web page to help me create a resonance in my head rather
 
 It's deployed at [https://marmalade-words.appspot.com](https://marmalade-words.appspot.com)
 
-[![Build Status](https://travis-ci.org/PurpleBooth/vocal-training-marmalade-words.svg)](https://travis-ci.org/PurpleBooth/vocal-training-marmalade-words)
+[![Build Status](https://scrutinizer-ci.com/g/PurpleBooth/vocal-training-marmalade-words/badges/build.png?b=master)](https://scrutinizer-ci.com/g/PurpleBooth/vocal-training-marmalade-words/build-status/master)

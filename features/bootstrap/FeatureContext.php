@@ -8,7 +8,7 @@ use Behat\MinkExtension\Context\MinkContext;
 //
 // Require 3rd-party libraries here:
 //
-require_once __DIR__ . "/../../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php";
+require_once __DIR__.'/../../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php';
 //
 
 /**
@@ -32,7 +32,7 @@ class FeatureContext extends MinkContext
      */
     public function theFollowingPhrasesExist(TableNode $table)
     {
-        $this->theFollowingDataExists($table, __DIR__ . "/../../data/phrases");
+        $this->theFollowingDataExists($table, __DIR__.'/../../data/phrases');
     }
 
     /**
@@ -40,7 +40,7 @@ class FeatureContext extends MinkContext
      */
     public function theFollowingWordsExist(TableNode $table)
     {
-        $this->theFollowingDataExists($table, __DIR__ . "/../../data/words");
+        $this->theFollowingDataExists($table, __DIR__.'/../../data/words');
     }
 
     /**
@@ -48,7 +48,7 @@ class FeatureContext extends MinkContext
      */
     public function restoreOriginalPhrases(ScenarioEvent $event)
     {
-        $paths = array(__DIR__ . "/../../data/words", __DIR__ . "/../../data/phrases");
+        $paths = array(__DIR__.'/../../data/words', __DIR__.'/../../data/phrases');
         foreach ($paths as $path) {
             if (file_exists("$path.orig") && file_exists($path)) {
                 unlink($path);
@@ -62,7 +62,7 @@ class FeatureContext extends MinkContext
      */
     public function viewThePhrasesPage()
     {
-        $this->visit("/phrases");
+        $this->visit('/phrases');
     }
 
     /**
@@ -70,7 +70,7 @@ class FeatureContext extends MinkContext
      */
     public function viewThePhrasesApi()
     {
-        $this->visit("/phrases.json");
+        $this->visit('/phrases.json');
     }
 
     /**
@@ -78,7 +78,7 @@ class FeatureContext extends MinkContext
      */
     public function viewTheWordPage()
     {
-        $this->visit("/words");
+        $this->visit('/words');
     }
 
     /**
@@ -86,7 +86,7 @@ class FeatureContext extends MinkContext
      */
     public function viewTheWordsApi()
     {
-        $this->visit("/words.json");
+        $this->visit('/words.json');
     }
 
     /**
@@ -105,7 +105,6 @@ class FeatureContext extends MinkContext
         }
     }
 
-
     /**
      * @Then /^the response should be valid json$/
      */
@@ -121,7 +120,7 @@ class FeatureContext extends MinkContext
     public function iShouldSeePhrases($phraseCount)
     {
         $actual = $this->getJsonPage();
-        assertCount((int)$phraseCount, $actual);
+        assertCount((int) $phraseCount, $actual);
     }
 
     /**
@@ -132,14 +131,14 @@ class FeatureContext extends MinkContext
         $subject = $this->getJsonPage();
 
         if (!is_array($subject)) {
-            throw new \Exception("API did not return array");
+            throw new \Exception('API did not return array');
         }
 
         $previousWord = null;
 
         foreach ($subject as $word) {
             if ($previousWord == $word) {
-                throw new \Exception("API returned two consecutive words");
+                throw new \Exception('API returned two consecutive words');
             }
 
             $previousWord = $word;
@@ -148,7 +147,7 @@ class FeatureContext extends MinkContext
 
     /**
      * @param TableNode $table
-     * @param string $path
+     * @param string    $path
      */
     private function theFollowingDataExists(TableNode $table, $path)
     {
@@ -171,8 +170,7 @@ class FeatureContext extends MinkContext
     {
         $body = $this->getSession()->getPage()->getContent();
         $actual = json_decode($body);
+
         return $actual;
     }
-
-
 }

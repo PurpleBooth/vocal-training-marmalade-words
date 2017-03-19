@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use PurpleBooth\Controllers\Index as IndexController;
 use PurpleBooth\Controllers\RandomLines as RandomLinesController;
@@ -11,7 +11,7 @@ use PurpleBooth\Settings\PageSettings;
 /*
  * Settings
  */
-require __DIR__ . "/../config/pages.php";
+require __DIR__.'/../config/pages.php';
 
 /*
  * Init app
@@ -19,16 +19,16 @@ require __DIR__ . "/../config/pages.php";
 $app = new Silex\Application();
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
-    'monolog.handler' => new Monolog\Handler\SyslogHandler('silex')
+    'monolog.handler' => new Monolog\Handler\SyslogHandler('silex'),
 ));
 
 /*
  * Index
  */
-$app["index.controller"] = $app->share(function () use ($app) {
+$app['index.controller'] = $app->share(function () use ($app) {
     return new IndexController();
 });
-$app->get('/', "index.controller:indexAction");
+$app->get('/', 'index.controller:indexAction');
 
 foreach ($page as $route => $rawConfig) {
     // Services
@@ -65,4 +65,4 @@ foreach ($page as $route => $rawConfig) {
     $app->get("$route.json", "random.{$rawConfig['type']}.controller:apiAction");
 }
 
-$app->run(); 
+$app->run();
