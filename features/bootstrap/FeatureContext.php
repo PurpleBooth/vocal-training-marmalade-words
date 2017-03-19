@@ -2,8 +2,8 @@
 
 use Behat\Behat\Event\ScenarioEvent;
 use Behat\Gherkin\Node\TableNode;
-use Behat\Mink\Exception\ExpectationException;
 use Behat\MinkExtension\Context\MinkContext;
+use Behat\Mink\Exception\ExpectationException;
 
 //
 // Require 3rd-party libraries here:
